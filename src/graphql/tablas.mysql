@@ -1,0 +1,19 @@
+CREATE TABLE owners(
+        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        persontype VARCHAR(30),
+        personname VARCHAR(30),
+        nodoc  VARCHAR(30),
+        doctype  VARCHAR(30),
+        owneraddres  VARCHAR(30),
+        phone VARCHAR(30),
+        email VARCHAR(30)'
+)
+
+ 
+        persontype: 'Persona natural',
+        personname: 'David',
+        nodoc: '555444',
+        doctype: 'Cedula',
+        owneraddres: 'Calle 555',
+        phone: '8888888',
+        email: 'david@mail.com'
