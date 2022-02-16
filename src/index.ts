@@ -11,8 +11,10 @@ import {
     addProject, 
     getUsers,
     getUsersFromUsersTable, 
-    getProjects,
-    getAssignments } from "./utils";
+    getProjectsFromProjectsTable,
+    getMembersFromTable,
+    getAssignments,
+    getProjects2 } from "./utils";
   
 
 //addUser("Farah Bennis", "fbennis@zcorp.com", "bbc123");
@@ -23,9 +25,12 @@ import {
 //createAssignmentTable();
 //listTables();
 //getUsersFromUsersTable();
-getUsers();
-getProjects();
-getAssignments();
+//getUsers();
+//getProjects();
+//getAssignments();
+//getMembersFromTable();
+//getProjects();
+
 const server = new ApolloServer({typeDefs, resolvers});
 
 server.listen()

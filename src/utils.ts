@@ -103,6 +103,23 @@ export const getUsersFromUsersTable = async () => {
     
 }
 
+export const getMembersFromTable = async () => {
+    const query = `
+    SELECT assignments.project_id, projects.title, users.name
+    FROM ((users 
+    INNER JOIN assignments
+    ON users.id = assignments.user_id)
+    INNER JOIN projects
+    ON assignments.project_id = projects.id)
+	ORDER BY projects.title DESC
+    `;
+    const res = await pool.query(query);
+    console.log(res.rows)
+    return readQuery(query);
+    
+}
+
+
 export const getUsers = async () => {
     const usersFromUsersTable = await getUsersFromUsersTable();
     console.log(usersFromUsersTable)
@@ -129,7 +146,59 @@ export const getUsers = async () => {
     return users;   
 }
 
-export const getProjects = async () => {
+export const getMembers = async () => {
+    const usersFromUsersTable = await getMembersFromTable();
+    console.log(usersFromUsersTable)
+    const assignments = await getAssignments();
+    const users = await usersFromUsersTable?.map(async (user: { id: any; name: any; email: any; }) => {
+        let projects: object [] = [];
+        await assignments?.forEach((assignment: { user_id: any; project_id: any; title: any; status: any; }) => {
+            if (user.id === assignment.user_id) {
+                projects.push({
+                   id: assignment.project_id,
+                   title: assignment.title,
+                   status: assignment.status 
+                });
+            }
+        })
+        console.log(projects)
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            projects: projects,
+        }
+    })
+    return users;   
+}
+
+export const getProjects2 = async () => {
+    const projectsFromProjectsTable = await getProjectsFromProjectsTable();
+    console.log(projectsFromProjectsTable)
+    const members = await getMembers();
+    const users = await projectsFromProjectsTable?.map(async (user: { id: any; name: any; email: any; }) => {
+        let projects: object [] = [];
+        await members?.forEach((assignment: {project_id: any; title: any; name: any; }) => {
+            if (user.id === assignment.project_id) {
+                projects.push({
+                   id: assignment.project_id,
+                   title: assignment.title,
+                   name: assignment.name 
+                });
+            }
+        })
+        console.log(projects)
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            projects: projects,
+        }
+    })
+    return users;   
+}
+
+export const getProjectsFromProjectsTable = async () => {
     const query=`
     SELECT * FROM projects;
     `
@@ -154,6 +223,8 @@ export const getAssignments = async () => {
     console.log(res.rows)  
     return readQuery(query);
 }
+
+
 
 export const createUserTable = async () => {
     const query = `
