@@ -1,18 +1,31 @@
 import { ApolloServer } from 'apollo-server'; 
 import { typeDefs } from "./graphql/schema";
 import { resolvers } from "./graphql/resolvers";
-import { client } from "../database/db";
-import { createUserTable, listTables, addUser, getUsers } from "./utils";
+import { 
+    createUserTable, 
+    createProjectTable,
+    createAssignmentTable, 
+    listTables,
+    addUser,
+    addAssignment, 
+    addProject, 
+    getUsers,
+    getUsersFromUsersTable, 
+    getProjects,
+    getAssignments } from "./utils";
   
-// client.connect()
-// client.query('SELECT NOW()', (err: any, res: any) => {
-//     console.log(err, res)
-//     client.end()
-//   })
-//addUser(3, "Oscar Perez", "elperez@zcorp.com", "cccc333");
+
+//addUser("Farah Bennis", "fbennis@zcorp.com", "bbc123");
+//addProject ("Onboard New Developers","active");
+//addAssignment("fbennis@zcorp.com", 3, "Farah Bennis");
 //createUserTable();
+//createProjectTable();
+//createAssignmentTable();
 //listTables();
+//getUsersFromUsersTable();
 getUsers();
+getProjects();
+getAssignments();
 const server = new ApolloServer({typeDefs, resolvers});
 
 server.listen()
